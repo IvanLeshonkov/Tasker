@@ -1,0 +1,61 @@
+<mat-card class="page">
+  <mat-card-header class="page-header">
+    <div>
+      Статус:
+      <mat-radio-group class="radio-group">
+        <mat-radio-button #filter (change)="changeFilter($event.value)" *ngFor="let season of seasons" [value]="season">{{season}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="page-content">
+      <mat-card class="card-list">
+        <mat-card-header>
+          <mat-card-title>Задачи</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-card *ngFor="let task of filterTasks" class="card-task">
+            <div class="card-task__container">
+              <mat-checkbox (change)="setChecked($event.checked, task)" [checked]="task.checked"></mat-checkbox>
+              <mat-card-header class="card-task__header">
+                <div class="card-task__header-line">
+                  <mat-card-title [ngClass]="task.checked ? 'card-task__title-checked' : ''">{{task.title}}</mat-card-title>
+                  <mat-card-subtitle class="card-task__subtitle">Потраченное время: {{task.time}}</mat-card-subtitle>
+                </div>
+                <div class="card-task__container-toolbar">
+                  <button *ngIf="!task.checked" (click)="editTask(task)" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button (click)="deleteTask(task)" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </mat-card-header>
+            </div>
+          </mat-card>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- ДОБАВЛЕНИЕ ЗАДАЧИ -->
+      <mat-card class="card-add">
+        <mat-card-header class="card-add__header">
+          <mat-card-title>Добавить задачу</mat-card-title>
+          <button (click)="addTask()" mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </mat-card-header>
+        <mat-card-content class="card-add__content">
+          <mat-form-field>
+            <mat-label>Название:</mat-label>
+            <input matInput #addTitle>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Затраты:</mat-label>
+            <input matInput #addTime>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+      <!-- ДОБАВЛЕНИЕ ЗАДАЧИ -->
+    </div>
+  </mat-card-content>
+</mat-card>
